@@ -45,12 +45,12 @@ cor_tbl
 cor_tbl = cor(na.omit(tbl_numeric)) %>% as.data.frame %>%
 select(h2o_flux)
 cor_tbl 
-vars = row.names(cor_tbl)[cor_tbl$h2o_flux^2 > .7] %>% na.exclude 
+vars = row.names(cor_tbl)[cor_tbl$h2o_flux^2 > .2] %>% na.exclude 
 vars
 formula = as.formula(paste("h2o_flux~", paste(vars,collapse = "+"), sep = "")) 
 formula
 row_numbers = 1:length(tbl$date) 
-teach = sample(row_numbers, floor(length(tbl$date)*.7))
+teach = sample(row_numbers, floor(length(tbl$date)*.2))
 test = row_numbers[-teach] 
 teaching_tbl_unq = tbl[teach,] 
 testing_tbl_unq = tbl[test,]
@@ -65,7 +65,4 @@ plot(mod1)
 mod2 = lm(h2o_flux~(LE + rand_err_h2o_flux)^2,data=tbl)
 summary(mod2) 
 predict(mod2) 
-resid(mod2) 
-coef(mod2) 
-anova(mod2) 
-plot(mod2)
+resid(mod2)
